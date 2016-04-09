@@ -10,10 +10,6 @@ import (
 	"encoding/json"
 )
 
-func bid(w http.ResponseWriter, r *http.Request)  {
-	
-}
-
 func main() {
 	context := context.NewBidderContext()
 	err := context.ConnectMongo("localhost", "aflodit")
@@ -28,12 +24,14 @@ func main() {
 
 	http.HandleFunc("/bid", func(w http.ResponseWriter, r *http.Request) {
 		result := randomBidder.Bid(nil)
+		w.Header().Set("Content-Type", "application/json")
+
 		if bytes, err := json.Marshal(result); err != nil {
-			fmt.Fprintf(w, "no result")
+			fmt.Fprintf(w, "")
 		}else {
+
 			fmt.Fprintf(w, string(bytes))
 		}
-
 	})
 
 	err = http.ListenAndServe(":5041", nil)
