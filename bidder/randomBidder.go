@@ -41,6 +41,7 @@ func NewRandomBidder(c *context.BidderContext) *RandomBidder {
 				if error != nil {
 					fmt.Println("fail to read img count")
 				} else {
+					fmt.Println("count is ", count)
 					ret.imgCount = count
 				}
 			case <- ret.counter:
@@ -65,7 +66,7 @@ func (bidder *RandomBidder) Bid(req *model.BidRequest) (res *model.BidResponse) 
 
 	if len(result) > 0 {
 		if file_id, ok := result[0]["file_id"].(string); ok {
-			fmt.Println("use file id" + file_id)
+			//fmt.Println("use file id" + file_id)
 			return &model.BidResponse{ImageId: file_id, Result:model.BID}
 		} else {
 			fmt.Println("fail to retrieve file_id", error)
